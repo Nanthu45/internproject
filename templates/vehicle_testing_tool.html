@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semja Vehicle Registration Form</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="vehicletestingtool">
+                <div class="row" style="text-align:center">
+                    <img src="{% static '/img/logo.JPG' %}" alt="logo image">
+                    <h3>Vehicle Testing Tool</h3>
+                </div>
+
+                <fieldset id="vendor" style="display: block;" class="fieldset-container">
+                    <legend><span class="number">1</span> Vendor Info<span style="color: red">*</span></legend>
+                    <input type="text" id="vendoremail" name="vendoremail" placeholder="Enter Email" onclick="editEmail()" onkeypress="EmailvenVehKeyPress(event, function() { document.getElementById('check_email_button').click(); })" required>
+                    <div id="vendordetails">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>Vendor Name:</span>
+                                <div>
+                                    <span id="vendorname"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="check_email_button" type="button" class="info-button" onclick="ValidateEmailInfo('{% url 'check_email' %}')">Check to Next</button> <!-- Check URL tag syntax -->
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <fieldset id="field" style="display: block;" class="fieldset-container">
+                    <legend><span class="number">1</span> Field Executive Info<span style="color: red">*</span></legend>
+                    <input type="text" id="emailfieldexecutive" name="emailfieldexecutive" placeholder="Enter Email" onclick="editEmailFieldExecutive()"  onkeypress="EmailvenVehKeyPress(event, function() { document.getElementById('check_email1_button').click(); })">
+                    <div id="fieldexecutivedetails">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>Field Executive Name:</span>
+                                <div>
+                                    <span id="fieldexecutivename"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="check_email1_button" type="button" class="info-button" onclick="FieldExecutiveEmailInfo('{% url 'check_field_executive_email' %}')">Check to Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                
+
+                <fieldset id="license" style="display: none;">
+                    <legend><span class="number">2</span>Driving License and Photo<span style="color: red">*</span></legend>
+                    <input type="text" id="drivinglicense" name="drivinglicense"  placeholder="Enter Driving License" onclick="editDrivingLicense()" onkeypress="DLvenVehKeyPress(event, function() { document.getElementById('licensebutton').click(); })" required>
+                    <div id="onboardstatus">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>OnBoard Status:</span>
+                                <div>
+                                    <span id="licensestatus"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="licensebutton" class="info-button" type="button" onclick="ValidateDrivingLicense()">Check to Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                
+
+
+
+
+                <fieldset id="vehicleno" style="display: none;">
+                    <legend><span class="number">3</span>Vehicle Number and Photo<span style="color: red">*</span></legend>
+                    <input type="text" id="vehiclenumber" name="vehiclenumber"  placeholder="Enter Vehicle Number" onclick="editVehicle()" onkeypress="VNvenVehKeyPress(event, function() { document.getElementById('vehiclebutton').click(); })" required>
+                    <div id="currentstatus">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>Current Status:</span>
+                                <div>
+                                    <span id="vehiclestatus"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="vehiclebutton" type="button" class="info-button" onclick="ValidateVehicle()">Check to Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="{% static '/js/testing.js' %}"></script>
+</body>
+</html>

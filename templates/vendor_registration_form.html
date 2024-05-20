@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semja Vehicle Registration Form</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <form id="vendorregistrationForm" enctype="multipart/form-data" method="post">
+                
+                <div class="row" style="text-align:center">
+                    <img src="{% static '/img/logo.JPG' %}" alt="logo image">
+                    <h3>Vendor Registration Form</h3>
+                </div>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">1</span>Vendor Info<span style="color: red">*</span></legend>
+                    <input type="text" id="vendoremail" name="vendoremail" placeholder="Enter Email"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">2</span>Vendor Office Name<span style="color: red">*</span></legend>
+                    <input type="text" id="vendoroffice" name="vendoroffice" placeholder="Enter Office Name"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">3</span> Vendor Name as per PAN card<span style="color: red">*</span></legend>
+                    <input type="text" id="vendorpanname" name="vendorpanname" placeholder="Enter your PAN name"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">4</span>Vendor Contact<span style="color: red">*</span></legend>
+                    <input type="text" id="mobilenumber" name="mobilenumber" placeholder="Contact" required oninput="formatMobileNo(event)" maxlength="10">
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">5</span> Bank Account Number<span style="color: red">*</span></legend>
+                    <input type="text" id="bankaccount" name="bankaccount" placeholder="Enter your bank number"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">6</span> Bank Passbook Photo<span style="color: red">*</span> </legend>
+                    <div>
+                        <input type="file" id="bankAccountCopy1" name="bankAccountCopy1" accept="image/*" required placeholder="Front copy">
+                    </div>
+                </fieldset>
+                
+
+                
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">7</span> Bank IFSC code</legend>
+                    <input type="text" id="ifsccode" name="ifsccode" placeholder="Enter IFSC">
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">8</span>GST Number and Office Address(if applicable)</span></legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="radio" id="gst" name="gst_option" value="gst" onclick="toggleNumberAndAddress()">GST Number</span>
+                        </div>
+                        <div class="button-item-right">
+                            <span><input type="radio" id="none" name="gst_option" value="none" onclick="toggleNumberAndAddress()">No </span>
+                        </div>             
+                    </div>
+                </fieldset>
+                
+                <fieldset class="fieldset-container">
+                    <div id="numberandaddress" style="display: none;">
+                        <label for="gstnumber">Number</label>
+                        <input type="text" id="gstInput" name="gst_value" placeholder="Enter GST Number">
+                        <label for="officeadress">Registered Office Address</label>
+                        <textarea type="text" id="gst_address" name="gst_address" placeholder="Type Your GST office address here"></textarea>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">9</span> Aadhar Card Number<span style="color: red">*</span></legend>
+                    <input type="text" id="adhar" name="adhar" placeholder="Aadhar"  oninput="formatAadharNo(event)" required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">11</span>PAN Card Number<span style="color: red">*</span></legend>
+                    <input type="text" id="pannumber" name="pannumber" placeholder="Enter your PAN Number"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">10</span> PAN card Photo<span style="color: red">*</span> </legend>
+                    <div>
+                        <input type="file" id="pancardcopy1" name="pancardcopy1" accept="image/*" required placeholder="upload your pan copy Front">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span class="number">12</span>Registered Vendor Office Address<span style="color: red">*</span></legend>
+                    <textarea id="address" name="address" placeholder="Type Your Vendor office address here" required></textarea>
+                </fieldset>
+
+                
+
+                <fieldset>
+                    <legend><span class="number">13</span>Terms<span style="color: red">*</span></legend> 
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="checkbox" id="option1" name="terms" value="option1" required>I/we hereby grant the Company the right to audit our books and records to confirm that no improper payments have been made by me/us from the date of commencement.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="checkbox" id="option2" name="terms" value="option2" required>I/we have read and complied with the Company's Anti-Bribery and Anti-corruption Policy</span><br>
+                    </div>
+                </fieldset> 
+                
+                <fieldset>
+                    <legend><span class="number">14</span>Credit Period<span style="color: red">*</span></legend>
+                    <select id="days" name="days" placeholder="Select Credit Period" required>
+                        <option value="">Select Your Credit Period</option>
+                        <option value="7 days">7 Days</option>
+                        <option value="15 days">15 Days</option>
+                        <option value="30 days">30 Days</option>
+                    </select>
+                </fieldset>
+
+                
+
+                <fieldset>
+                    <legend><span class="number">15</span> Declaration from an unregistered Concern under GST<span style="color: red">*</span></legend>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="radio" id="option1" name="declaration" value="option1" required>I/We hereby declare that I/we am/are not a registered dealer under the Goods and Service Act.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="radio" id="option2" name="declaration" value="option2" required>I/We hereby undertake not to charge GST on any of the sales/services made by us to you with respect to GST requirements.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="radio" id="option3" name="declaration" value="option3" required>I/We agree to indemnify your company for any loss, damages, or costs incurred by your company to settle any prosecution or demand.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="radio" id="option4" name="declaration" value="option4" required>Not applicable.</span><br>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <legend><span class="number">16</span>Declaration on Anti-Bribery and Anti-Corruption Compliance <span style="color: red">*</span></legend>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="checkbox" id="option1" name="declaration_1" value="option1" required>I acknowledge that under my formal contract with the Company, I must adhere to anti-bribery legislation and the Company's policies.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="checkbox" id="option2"  name="declaration_1" value="option2"required>I confirm that neither I nor my business or employees have engaged in bribery or corruption while representing the Company.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="checkbox" id="option3" name="declaration_1" value="option3"required>No facilitation payments have been made, and any cash expenditures were minimal and for legitimate petty cash purposes.</span><br>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span><input type="checkbox" id="option4" name="declaration_1" value="option4"required>No political or charitable donations have been made on behalf of the Company without proper authorization.</span><br>
+                    </div>     
+                </fieldset>
+                
+                <fieldset>
+                    <button id="submitBtn" type="button" onclick="submitVendorRegForm(event, '{% url 'update_spreadsheet_vendor_registration' %}')" >Submit</button>
+                </fieldset> 
+                
+                <fieldset id="submissionMessage" style="display: none;">
+                    <div>
+                        <p>Form Successfully submitted. Thanks for your response.</p>
+                        <p><a href="#" onclick="returnToVenRegForm()">Return to Form</a></p>
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static '/js/venreg.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semja Vehicle Registration Form</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <form id="executivevehicleregistrationForm">
+                <div class="row" style="text-align:center">
+                    <img src="{% static 'img/logo.JPG' %}" alt="logo image">
+                    <h3>Field Executive Vehicle Registration Form</h3>
+                </div>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">1</span> Field Executive Info<span style="color: red">*</span></legend>
+                    <input type="text" id="emailfieldexecutive" name="emailfieldexecutive" placeholder="Enter Email" onclick="editEmailFieldExecutive()"  onkeypress="EmailvenVehKeyPress(event, function() { document.getElementById('check_email_button').click(); })">
+                    <div id="fieldexecutivedetails">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>Field Executive Name:</span>
+                                <div>
+                                    <span id="fieldexecutivename"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="check_email_button" type="button" class="info-button" onclick="FieldExecutiveEmailInfo('{% url 'check_field_executive_email' %}')">Check to Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="license" style="display: none;">
+                    <legend><span class="number">2</span>Driving License and Photo<span style="color: red">*</span></legend>
+                    <input type="text" id="drivinglicense" name="drivinglicense"  placeholder="Enter Driving License" onclick="editDrivingLicense()" onkeypress="DLvenVehKeyPress(event, function() { document.getElementById('licensebutton').click(); })" required>
+                    <div id="onboardstatus">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>OnBoard Status:</span>
+                                <div>
+                                    <span id="licensestatus"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="licensebutton" class="info-button" type="button" onclick="ValidateDrivingLicense()">Check to Next</button>
+                            </div>
+                        </div>
+                        <div >
+                            <input style="display: none;" type="file" id="license_photo" name="license_photo" accept="image/*" required placeholder="upload your license Photo" onchange="toggleLicensetoVehicle()">
+                        </div> 
+                    </div>
+                </fieldset>
+
+                
+
+
+
+
+                <fieldset id="vehicleno" style="display: none;">
+                    <legend><span class="number">3</span>Vehicle Number and Photo<span style="color: red">*</span></legend>
+                    <input type="text" id="vehiclenumber" name="vehiclenumber"  placeholder="Enter Vehicle Number" onclick="editVehicle()" onkeypress="VNvenVehKeyPress(event, function() { document.getElementById('vehiclebutton').click(); })" required>
+                    <div id="currentstatus">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>Current Status:</span>
+                                <div>
+                                    <span id="vehiclestatus"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="vehiclebutton" type="button" class="info-button" onclick="ValidateVehicle()">Check to Next</button>
+                            </div>
+                        </div>
+                        <div>
+                            <input  style="display: none;" type="file" id="vehicle_photo" name="vehicle_photo" accept="image/*" required placeholder="upload your Vehicle Photo" onchange="toggleVehicletoAadhar()">
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="fieldset-container" id="aadhar" style="display: none;"> 
+                    <legend><span class="number">4</span> Aadhar Card Number and Photo<span style="color: red">*</span></legend>
+                    <input type="text" id="aadhar_no" name="adhar_no" placeholder="Enter your Aadhar" oninput="formatAadharNo(event)" required >
+                    <label for="front_aadhar">Front:</label>
+                    <input type="file" id="aadhar_photo" name="aadhar_photo" accept="image/*" placeholder="upload your Aadhar Photo"  required >
+                    <label for="back_aadhar">Back:</label>
+                    <input type="file" id="aadhar_photo_b" name="aadhar_photo_b" accept="image/*" placeholder="upload your Aadhar Photo" onchange="toggleAadhartoRC()" required >
+                </fieldset>
+
+
+                <fieldset class="fieldset-container" id="rc" style="display: none;">
+                    <legend><span class="number">5</span>RC Photo<span style="color: red">*</span></legend>
+                    <label for="front_rc">Front:</label>
+                    <input type="file" id="rc_photo_f" name="rc_photo_f" accept="image/*" required placeholder="Upload your RC Photo" >
+                    <label for="back_rc">Back:</label>
+                    <input type="file" id="rc_photo_b" name="rc_photo_b" accept="image/*" required placeholder="Upload your RC Photo" onchange="toggleSubsequentFieldsets()">
+                </fieldset>
+            
+                <fieldset class="fieldset-container" id="insur" style="display: none;">
+                    <legend><span class="number">6</span>Insurance Photo(Optional)</legend>
+                    <input type="file" id="insur_photo" name="insur_photo" accept="image/*" required placeholder="Upload your Insurance Photo">
+                </fieldset>
+            
+                <fieldset class="fieldset-container" id="pan" style="display: none;">
+                    <legend><span class="number">7</span>PAN Photo(Optional)</legend> 
+                    <input type="file" id="pan_photo" name="pan_photo" accept="image/*" required placeholder="Upload your Pan Photo">
+                </fieldset>
+            
+                <fieldset class="fieldset-container" id="bank" style="display: none;">
+                    <legend><span class="number">8</span>Bank Passbook Photo(Optional)</legend> 
+                    <input type="file" id="bank_photo" name="bank_photo" accept="image/*" required placeholder="Upload your Bank Passbook Photo">
+                </fieldset>
+            
+                <fieldset class="fieldset-container" id="selecttype" style="display: none;">
+                    <legend><span class="number">9</span>Vehicle Type<span style="color: red">*</span></legend>
+                    <select id="job" name="userjob" required onchange="showPartnerRegistration()">
+                        <option value="">Select Your Vehicle</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Bike">Bike</option>
+                        <option value="Car">Car</option>
+                        <option value="LCV-Light Commercial Vehicle">LCV-Light Commercial Vehicle</option>
+                        <option value="HCV-Heavy Commercial Vehicle">HCV-Heavy Commercial Vehicle</option>
+                    </select>
+                </fieldset>
+            
+                <fieldset class="fieldset-container" id="partnerreg" style="display: none;">
+                    <legend><span class="number">10</span>Partner Name, Contact, and Profile<span style="color: red">*</span></legend>
+                    <input type="text" id="partnername" name="partnername" placeholder="Enter Partner Name" required onkeypress="venVehNextInput(event, 'mobileno')">
+                    <input type="text" id="mobileno" name="mobileno" placeholder="Enter Partner Mobile no" required onkeypress="venVehNextInput(event, 'partner_photo')" oninput="formatMobileNo(event)" maxlength="10">
+                    <input type="file" id="partner_photo" name="partner_photo" accept="image/*" required placeholder="Upload Partner Photo" onkeypress="venVehNextInput(event, 'comment')">
+                    <textarea id="comment" name="comment" placeholder="Any comments" onkeypress="venVehsubmit(event)"></textarea>
+                    <button id="submitBtn" type="button" onclick="submitvendorvehicleForm(event, '{% url 'update_spreadsheet_field_executive' %}')">Submit</button>
+                </fieldset> 
+                <fieldset id="exeresubmissionMessage" style="display: none;">
+                    <div>
+                        <p>Form Successfully submitted. Thanks for your response.</p>
+                        <p><a href="#" onclick="returnToVenForm()">Return to Form</a></p>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="{% static '/js/exeveh.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semja Vehicle Registration Form</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <form id="executiveregistrationForm" enctype="multipart/form-data">
+                
+                <div class="row" style="text-align:center">
+                    <img src="{% static '/img/logo.JPG' %}" alt="logo image">
+                    <h3>Executive Registration Form</h3>
+                </div>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">1</span>Executive Info<span style="color: red">*</span></legend>
+                    <input type="text" id="executiveemail" name="executiveemail" placeholder="Enter Email"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">2</span> Executive Name as per Pancard<span style="color: red">*</span></legend>
+                    <input type="text" id="exepanname" name="exepanname" placeholder="Enter your pan name"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">3</span>Executive Contact<span style="color: red">*</span></legend>
+                    <input type="text" id="mobilenumber" name="mobilenumber" placeholder="Contact" oninput="formatMobileNo(event)" maxlength="10" required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">4</span> Bank Account Number<span style="color: red">*</span></legend>
+                    <input type="text" id="bankaccount" name="bankaccount" placeholder="Enter your bank number"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">5</span> Bank Passbook Photo<span style="color: red">*</span> </legend>
+                    <div>
+                        <input type="file" id="bankAccountCopy1" name="bankAccountCopy1" accept="image/*" required placeholder="Front copy">
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">6</span> Bank IFSC code<span style="color: red">*</span></legend>
+                    <input type="text" id="ifsccode" name="ifsccode" placeholder="Enter IFSC">
+                </fieldset>
+    
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">7</span> Aadhar Card Number<span style="color: red">*</span></legend>
+                    <input type="text" id="adhar" name="adhar" placeholder="Aadhar" oninput="formatAadharNo(event)" required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">8</span>PAN Card Number<span style="color: red">*</span></legend>
+                    <input type="text" id="pannumber" name="pannumber" placeholder="Enter your PAN Number"  required>
+                </fieldset>
+
+                <fieldset class="fieldset-container">
+                    <legend><span class="number">9</span> PAN card Photo<span style="color: red">*</span> </legend>
+                    <div>
+                        <input type="file" id="pancardcopy1" name="pancardcopy1" accept="image/*" required placeholder="upload your pan copy Front">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <button id="submitBtn" type="button" onclick="submitExecutiveRegForm(event, '{% url 'update_spreadsheet_executive_registration' %}')" >Submit</button>
+                </fieldset> 
+                
+                <fieldset id="exesubmissionMessage" style="display: none;">
+                    <div>
+                        <p>Form Successfully submitted. Thanks for your response.</p>
+                        <p><a href="#" onclick="returnToExeRegForm()">Return to Form</a></p>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static '/js/exereg.js' %}"></script>
+</body>
+</html>

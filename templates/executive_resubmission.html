@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semja Vehicle Registration Form</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <form id="exeresubmissionForm">
+                {% csrf_token %}
+                <div class="row" style="text-align:center">
+                    <img src="{% static '/img/logo.JPG' %}" alt="logo image">
+                    <h3>Field Executive Vehicle Resubmission Form</h3>
+                </div>
+
+                <fieldset id="field" style="display: block;" class="fieldset-container">
+                    <legend><span class="number">1</span> Field Executive Info</legend>
+                    <input type="text" id="emailfieldexecutive" name="emailfieldexecutive" placeholder="Enter Email" onclick="editEmailFieldExecutive()" onkeypress="EmailvenVehKeyPress(event, function() { document.getElementById('check_email_button').click(); })" >
+                    <div id="fieldexecutivedetails">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span >Field Executive Name:</span>
+                                <div>
+                                    <span  id="fieldexecutivename"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button  id="check_email_button" type="button" class="info-button" onclick="FieldExecutiveEmailInfo('{% url 'check_field_executive_email' %}')">Field Executive Info</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <fieldset id="2" style="display: none;">
+                    <legend><span class="number">2</span>Partner ID</legend>
+                    <input type="text" id="partner_id" name="partner_id" placeholder="Enter Partner ID " onclick="editID()" onkeypress="idvenVehKeyPress(event, function() { document.getElementById('partnerbutton').click(); })">
+                    <div id="partnerstatus">
+                        <div class="flex-container">
+                            <div class="span-item-left">
+                                <span>Partner Status:</span>
+                                <div>
+                                    <span id="partnername"></span>
+                                </div>
+                            </div>
+                            <div class="button-item-right">
+                                <button id="partnerbutton" type="button" class="info-button" onclick="validatePartner('{% url 'check_partner' %}')">Check to Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="3" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">3</span>PAN Card Number and Photo</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="pan" name="option"  onclick="togglePanNumberAndCopy()">Resubmit</span>
+                        </div>          
+                    </div>
+                    <div id="panNumberAndCopy" style="display: none;">
+                        <input type="text" id="pannumber" name="pannumber" placeholder="Enter your PAN Number">
+                        <input type="file" id="pancardcopy1" name="pancardcopy1" accept="image/*" placeholder="Upload your PAN copy">
+                    </div>
+                </fieldset>
+                
+
+
+                <fieldset id="4" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">4</span> Aadhar Card Number and Photo</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="aadhar" name="option"  onclick="toggleAadharNumberAndCopy()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="aadharNumberAndCopy" style="display: none;">
+                        <input type="text" id="adharnumber" name="adhar" placeholder="Enter your adhar" oninput="formatAadharNo(event)">
+                        <label for="front_aadhar">Front:</label>
+                        <input type="file" id="aadharcopy1" name="aadharcopy1" accept="image/*" placeholder="upload your aadhar">
+                        <label for="back_aadhar">Back:</label>
+                        <input type="file" id="aadharcopy2" name="aadharcopy2" accept="image/*" placeholder="upload your aadhar">
+                    </div>
+                </fieldset>
+
+                <fieldset id="5" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">5</span> Driving License Number and Photo</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="dl" name="option"  onclick="toggleDlNumberAndCopy()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="dlNumberAndCopy" style="display: none;">
+                        <input type="text" id="dlnumber" name="dlnumber" placeholder="Enter your adhar">
+                    <input type="file" id="dlcopy1" name="dlcopy1" accept="image/*" placeholder="upload your DL">
+                    </div>
+                </fieldset>
+
+
+                <fieldset id="6" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">6</span> Vehicle Number and Photo</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="vehicle" name="option"  onclick="togglevehicleNumberAndCopy()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="vehicleNumberAndCopy" style="display: none;">
+                        <input type="text" id="vehiclenumber" name="vehiclenumber" placeholder="Enter your vehicle Number" >
+                    <input type="file" id="vehiclecopy1" name="vehiclecopy1" accept="image/*"  placeholder="upload your Number Plate">
+                    </div>
+                </fieldset>
+
+                <fieldset id="7" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">7</span> Bank Account No and Photo</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="accountCheckbox" name="accountCheckbox" onclick="toggleAccountNumberAndCopy()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="accountNumberAndCopy" style="display: none;">
+                        <input type="text" id="account" name="account" placeholder="Enter your Bank Account number" >
+                        <input type="file" id="accountcopy1" name="accountcopy1" accept="image/*"  placeholder="Upload your copy">
+                    </div>
+                </fieldset>
+
+                <fieldset id="8" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">8</span> RC Number</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="rcCheckbox" name="rcCheckbox" onclick="toggleRCNumber()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="rcNumber" style="display: none;">
+                        <input type="text" id="rc" name="rc" placeholder="Enter your RC number" >
+                        <input type="file" id="rc_photo" name="rc_photo" accept="image/*"  placeholder="Upload your Insurance">
+                    </div>
+                </fieldset>
+                
+                
+
+                <fieldset id="9" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">9</span> Partner Contact</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="partnerCheckbox" name="partnerCheckbox" onclick="togglePartnerContact()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="partnerContact" style="display: none;">
+                        <input type="text" id="partnerMobilenumber" name="partnerMobilenumber" placeholder="Enter your Partner's mobile Number"  oninput="formatMobileNo(event)" maxlength="10" required>
+                    </div>
+                </fieldset>
+
+                <fieldset id="10" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">10</span> Insurance</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="insuranceCheckbox" name="insuranceCheckbox" onclick="toggleInsuranceUpload()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="insuranceUpload" style="display: none;">
+                        <input type="file" id="insurcopy1" name="insurcopy1" accept="image/*"  placeholder="Upload your Insurance">
+                    </div>
+                </fieldset>
+                
+                <fieldset id="11" style="display: none;" class="fieldset-container">
+                    <legend><span class="number">11</span> Profile Photo</legend>
+                    <div class="radio-container">
+                        <div class="span-item-left">
+                            <span><input type="checkbox" id="photoCheckbox" name="photoCheckbox" onclick="toggleProfilePhotoUpload()">Resubmit</span>
+                        </div>            
+                    </div>
+                    <div id="photoUpload" style="display: none;">
+                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*" placeholder="Upload your Profile Photo">
+                    </div>
+                </fieldset>
+                
+
+                <fieldset id="12" style="display: none;" style="display: none;" >
+                    <button id="submitBtn" type="button" onclick="submitExeReSubmissionForm(event, '{% url 'update_spreadsheet_executive_resubmission' %}')" >Submit</button>
+                </fieldset> 
+
+                <fieldset id="exeresubmissionMessage" style="display: none;">
+                    <div>
+                        <p>Form Successfully submitted. Thanks for your response.</p>
+                        <p><a href="#" onclick="returnToExeReForm()">Return to Form</a></p>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="{% static '/js/exeresub.js' %}"></script>
+    
+</body>
+</html>
